@@ -4,10 +4,20 @@ import 'package:flutter/cupertino.dart';
 class NumerosProvider extends ChangeNotifier{
 
   final List<Historial?> _numeros = [];
+  final List<int> _numerosMayor = [];
+  final List<int> _numerosMenor = [];
 
-  List<Historial?> get getListXFile => _numeros;
+  List<Historial?> get getListHNumeros => _numeros;
+  List<int> get getListNumMayor => _numerosMayor;
+  List<int> get getListNumMenor => _numerosMenor;
 
-  addNumero(Historial numero){
+  addHistorialNumero(Historial numero){
     _numeros.add(numero);
+  }
+  addNumeroMayor(int numero){
+    _numerosMayor.add(numero);
+  }
+  addNumeroMenor(int numero){
+    _numerosMenor.add(numero);
   }
 }
