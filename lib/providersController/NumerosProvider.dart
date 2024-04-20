@@ -13,11 +13,14 @@ class NumerosProvider extends ChangeNotifier{
 
   addHistorialNumero(Historial numero){
     _numeros.add(numero);
+    notifyListeners();
   }
   addNumeroMayor(int numero){
     _numerosMayor.add(numero);
+    notifyListeners();
   }
   addNumeroMenor(int numero){
     _numerosMenor.add(numero);
+    notifyListeners();
   }
 }

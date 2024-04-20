@@ -1,12 +1,15 @@
-import 'package:adivina_numero_desafio/models/Historial.dart';
-import 'package:adivina_numero_desafio/providers/NumerosProvider.dart';
+
+import 'package:adivina_numero_desafio/providersController/NumerosProvider.dart';
+import 'package:adivina_numero_desafio/providersController/NivelesProvider.dart';
 import 'package:adivina_numero_desafio/widgets/NumeroContainer.dart';
+import 'package:adivina_numero_desafio/widgets/SlideButtonSteps.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:adivina_numero_desafio/widgets/HistorialNumeroContainer.dart';
-
+import 'package:adivina_numero_desafio/Controller/HomeController.dart';
 
 
 class Home extends StatefulWidget {
@@ -18,8 +21,14 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  HomeController homeController = HomeController();
+
   @override
   Widget build(BuildContext context) {
+    homeController.intentop = Provider.of<NivelesProvider>(context);
+    homeController.numerosp = Provider.of<NumerosProvider>(context);
+
+
     return Scaffold(
       appBar: buildBar(context),
       body: SingleChildScrollView(
@@ -33,36 +42,58 @@ class _HomeState extends State<Home> {
                 children: [
                   Expanded(
                     child: TextField(
-                      onChanged: (e){
-                      },
-                      decoration: const InputDecoration(
-                        helperText: "###",
-                        border: OutlineInputBorder(
+                      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                      keyboardType: TextInputType.number,
+                      controller: homeController.textFieldNumero,
+                      decoration: InputDecoration(
+                        labelText: homeController.intentop.getLenghNA,
+                        hintText: "Numero",
+                        border: const OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(5)),
                         )
                       ),
+                      onSubmitted: (value) => homeController.OnSaveTextFieldController(value),
                     ),
                   ),
-                  const Expanded(
+                   Expanded(
                     child: ListTile(
-                      title: Text("Intentos",textAlign: TextAlign.center,),
-                      subtitle: Text("0",textAlign: TextAlign.center,),
+                      title: const Text("Intentos",textAlign: TextAlign.center,),
+                      subtitle: Text(homeController.intentop.getIntentos,textAlign: TextAlign.center,),
                     )
                   )
                 ],
               ),
             ),
             Consumer<NumerosProvider>(
-              builder: (context,provedor, child){
+              builder: (context,nup, child){
                 return Row(
                   children: [
-                    Expanded(child: NumeroContainer(titulo: "Mayor que", numeros: provedor.getListNumMayor)),
-                    Expanded(child: NumeroContainer(titulo: 'Menor que', numeros: provedor.getListNumMenor,)),
-                    Expanded(child: HistorialNumeroContainer(titulo: 'Historial', numeros: provedor.getListHNumeros,))
+                    Expanded(child: NumeroContainer(titulo: "Mayor que", numeros: nup.getListNumMayor)),
+                    Expanded(child: NumeroContainer(titulo: 'Menor que', numeros: nup.getListNumMenor,)),
+                    Expanded(child: HistorialNumeroContainer(titulo: 'Historial', numeros: nup.getListHNumeros,))
                   ],
                 );
               }
             ),
+            const Divider(
+              height: 20,
+            ),
+            Consumer<NivelesProvider>(
+                builder: (context,np, child){
+                  return Column(
+                    children: [
+                      const Text("Dificultad:"),
+                      SlideButtonSteps(
+                          title: np.getNiveles[np.nivelSelect.toInt()],
+                          steps: np.getNiveles.length-1,
+                          currentStep: np.nivelSelect,
+                          change: (int value)=> np.seleccionNivel(value),
+                      ),
+                    ],
+                  );
+                }
+            ),
+
           ],
         ),
       ),
