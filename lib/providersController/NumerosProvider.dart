@@ -23,4 +23,9 @@ class NumerosProvider extends ChangeNotifier{
     _numerosMenor.add(numero);
     notifyListeners();
   }
+  resetNumeros(){
+    _numerosMayor.clear();
+    _numerosMenor.clear();
+    notifyListeners();
+  }
 }

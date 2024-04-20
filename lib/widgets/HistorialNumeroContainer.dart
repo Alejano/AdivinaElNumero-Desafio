@@ -22,10 +22,10 @@ class HistorialNumeroContainer extends StatelessWidget {
                 itemCount: numeros.length,
                 itemBuilder: (_,index){
                   Historial? hn = numeros[index];
-                  return ListTile(
-                    title: Text(numeros[index].toString(),
+                  return Center(
+                    child: Text(numeros[index]!.numero.toString(),
                       style: TextStyle(
-                        color: (hn!.estado)?Colors.green:Colors.red
+                          color: (hn!.estado)?Colors.green:Colors.red
                       ),
                     ),
                   );

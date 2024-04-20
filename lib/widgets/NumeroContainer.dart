@@ -12,6 +12,7 @@ class NumeroContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Text(titulo),
           SingleChildScrollView(
@@ -20,9 +21,7 @@ class NumeroContainer extends StatelessWidget {
               child: ListView.builder(
                 itemCount: numeros.length,
                 itemBuilder: (_,index){
-                  return ListTile(
-                    title: Text(numeros[index].toString()),
-                  );
+                  return Center(child: Text(numeros[index].toString()));
                 },
               ),
             ),

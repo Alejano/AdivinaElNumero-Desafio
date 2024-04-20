@@ -52,7 +52,7 @@ class _HomeState extends State<Home> {
                           borderRadius: BorderRadius.all(Radius.circular(5)),
                         )
                       ),
-                      onSubmitted: (value) => homeController.OnSaveTextFieldController(value),
+                      onSubmitted: (value) => homeController.onSaveTextFieldController(value),
                     ),
                   ),
                    Expanded(
@@ -87,7 +87,7 @@ class _HomeState extends State<Home> {
                           title: np.getNiveles[np.nivelSelect.toInt()],
                           steps: np.getNiveles.length-1,
                           currentStep: np.nivelSelect,
-                          change: (int value)=> np.seleccionNivel(value),
+                          change: (int value)=> homeController.onNivelChange(value),
                       ),
                     ],
                   );

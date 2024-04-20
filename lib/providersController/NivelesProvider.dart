@@ -4,13 +4,16 @@ import 'package:flutter/cupertino.dart';
 
 class NivelesProvider extends ChangeNotifier{
   double nivelSelect = 0;
-  int intentos = 0;
+  int intentos = 5;
   int numeroAzar = 1;
   final Set<String> _niveles = {'Facil','Medio','Dificil','Extremo'};
 
-  List<String> get getNiveles => _niveles.toList();
-  String get getIntentos => intentos.toString();
 
+  List<String> get getNiveles => _niveles.toList();
+  int get getNIntentos => intentos;
+  int get getNumeroAdivinar => numeroAzar;
+  double get getNivelSelect => nivelSelect;
+  String get getIntentos => intentos.toString();
   String get getLenghNA{
     String etiqueta ="";
     print(numeroAzar.abs().toString().length);
@@ -55,5 +58,9 @@ class NivelesProvider extends ChangeNotifier{
     notifyListeners();
   }
 
+  restarIntentos(){
+    intentos = intentos -1;
+    notifyListeners();
+  }
 
 }
